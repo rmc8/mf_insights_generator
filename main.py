@@ -40,25 +40,8 @@ class Agent:
 
 
 def main():
-    fire.Fire(
-        {
-            "scrape": Agent.scrape,
-            "analyze": Agent.analyze,
-            "run": Agent.run,
-        }
-    )
+    fire.Fire(Agent)
 
 
 if __name__ == "__main__":
-    mfmc = MoneyForwardMeClient(
-        email=str(os.environ.get("MONEYFORWARD_EMAIL")),
-        password=str(os.environ.get("MONEYFORWARD_PASSWORD")),
-    )
-    try:
-        mfmc.login()
-        df = mfmc.get_cf_data(is_last_month=True)
-        output_path = output_dir / "mf_data.tsv"
-        os.makedirs(output_dir, exist_ok=True)
-        df.to_csv(output_path, sep="\t", index=False)
-    finally:
-        mfmc.close()
+    main()
